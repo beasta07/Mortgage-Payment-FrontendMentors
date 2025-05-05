@@ -12,7 +12,7 @@ const Calculator = () => {
     setMortgageYears,
     interestRate,
     setInterestRate,
-    calculateMortgage
+    calculateMortgage,
   } = useContext(MortgageContext);
 
   const validationSchema = Yup.object().shape({
@@ -57,10 +57,8 @@ const Calculator = () => {
               values.interestRate
             );
           }}
-          
-          
         >
-          {({ errors, touched, resetForm }) => (
+          {({ errors, touched, values, resetForm }) => (
             <Form className="mt-5">
               <button
                 type="button"
@@ -73,13 +71,25 @@ const Calculator = () => {
               {/* Mortgage Amount */}
               <label className="text-gray-500 text-xs block">Mortgage Amount</label>
               <div className={`flex md:rounded-md border mt-2 overflow-hidden ${errors.mortgageAmount && touched.mortgageAmount ? 'border-red-500' : 'border-blue-200'}`}>
-                <span className={`inline-flex font-semibold items-center px-3 text-sm ${errors.mortgageAmount && touched.mortgageAmount ? 'bg-red-100' : 'bg-primary text-gray-600'}`}>
+                <span className={`inline-flex font-semibold items-center px-3 text-sm ${
+                  errors.mortgageAmount && touched.mortgageAmount
+                    ? 'bg-red-100'
+                    : values.mortgageAmount
+                    ? 'bg-primary text-white'
+                    : 'bg-blue-100'
+                }`}>
                   £
                 </span>
                 <Field
                   type="number"
                   name="mortgageAmount"
-                  className="block w-full px-3 py-2 focus:outline-none text-sm"
+                  className={`block w-full px-3 py-2 text-sm focus:outline-none ${
+                    errors.mortgageAmount && touched.mortgageAmount
+                      ? ' border border-red-100'
+                      : values.mortgageAmount
+                      ? ' border border-primary text-black'
+                      : 'border border-blue-100'
+                  }`}
                   placeholder="Enter amount"
                 />
               </div>
@@ -93,10 +103,22 @@ const Calculator = () => {
                     <Field
                       type="number"
                       name="mortgageYears"
-                      className="block w-full px-3 py-2 text-sm"
+                      className={`block w-full px-3 py-2 text-sm focus:outline-none ${
+                        errors.mortgageYears && touched.mortgageYears
+                        ? ' border border-red-100'
+                        : values.mortgageAmount
+                        ? ' border border-primary text-black'
+                        : 'border border-blue-100'
+                      }`}
                       placeholder="Enter years"
                     />
-                    <span className={`inline-flex items-center px-3 text-sm ${errors.mortgageYears && touched.mortgageYears ? 'bg-red-100' : 'bg-primary text-blue-900'}`}>
+                    <span className={`inline-flex items-center px-3 text-sm ${
+                      errors.mortgageYears && touched.mortgageYears
+                        ? 'bg-red-100'
+                        : values.mortgageYears
+                        ? 'bg-primary text-white'
+                        : 'bg-blue-100'
+                    }`}>
                       years
                     </span>
                   </div>
@@ -110,10 +132,22 @@ const Calculator = () => {
                     <Field
                       type="number"
                       name="interestRate"
-                      className="block w-full px-3 py-2 focus:outline-none text-sm"
+                      className={`block w-full px-3 py-2 text-sm focus:outline-none ${
+                        errors.interestRate && touched.interestRate
+                        ? ' border border-red-100'
+                        : values.mortgageAmount
+                        ? ' border border-primary text-black'
+                        : 'border border-blue-100'
+                      }`}
                       placeholder="Enter %"
                     />
-                    <span className={`inline-flex items-center px-3 text-sm ${errors.interestRate && touched.interestRate ? 'bg-red-100' : 'bg-primary text-blue-900'}`}>
+                    <span className={`inline-flex items-center px-3 text-sm ${
+                      errors.interestRate && touched.interestRate
+                        ? 'bg-red-100'
+                        : values.interestRate
+                        ? 'bg-primary text-white'
+                        : 'bg-blue-100'
+                    }`}>
                       %
                     </span>
                   </div>
@@ -125,12 +159,12 @@ const Calculator = () => {
               <div className="mt-5">
                 <label className="text-gray-500 text-xs block">Mortgage Type</label>
 
-                <label className={`border mt-2 bg-white border-gray-300 flex items-center gap-5 p-2 cursor-pointer `}>
+                <label className="border mt-2 bg-white border-gray-300 flex items-center gap-5 p-2 cursor-pointer">
                   <Field type="radio" name="mortgageType" value="repayment" />
                   <span className="font-medium text-sm text-blue-900">Repayment</span>
                 </label>
 
-                <label className={`border bg-white border-gray-300 mt-2 flex items-center gap-5 p-2 cursor-pointer`}>
+                <label className="border bg-white border-gray-300 mt-2 flex items-center gap-5 p-2 cursor-pointer">
                   <Field type="radio" name="mortgageType" value="interest" />
                   <span className="font-medium text-sm text-blue-900">Interest Only</span>
                 </label>
@@ -139,7 +173,7 @@ const Calculator = () => {
 
               <button
                 type="submit"
-                className={`md:rounded-full mt-5 w-[55%] cursor-pointer flex items-center gap-2 px-4 py-2  bg-primary`}
+                className="md:rounded-full mt-5 w-[55%] cursor-pointer flex items-center gap-2 px-4 py-2 bg-primary"
               >
                 <CiCalculator1 />
                 <span className="font-medium text-sm text-blue-900">Calculate Repayments</span>
