@@ -1,0 +1,11 @@
+@font-face {
+  font-family: Jakarta;
+  src: url('../assets/fonts/static/PlusJakartaSans-Medium.ttf');
+
+}
+@import "tailwindcss";
+
+@theme{
+  --font-jakarta: Jakarta;
+  --color-primary: hsl(61,70%,52%);
+}
